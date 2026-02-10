@@ -10,8 +10,8 @@ import java.util.Scanner;
 public class VulnerableApp {
 
     private static final String DB_URL = "jdbc:mysql://mydatabase.com/mydb";
-    private static final String DB_USER = "admin";
-    private static final String DB_PASSWORD = "secret123";
+    private static final String DB_USER = System.getEnv("SQL_USER");
+    private static final String DB_PASSWORD = System.getEnv("SECRET");
 
     public static String getUserInput() {
         Scanner scanner = new Scanner(System.in);
@@ -72,3 +72,4 @@ public class VulnerableApp {
     }
 
 }
+
