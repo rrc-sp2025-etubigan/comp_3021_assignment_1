@@ -6,12 +6,15 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.sql.*;
 import java.util.Scanner;
+import java.util.logging.*;
 
 public class VulnerableApp {
 
     private static final String DB_URL = "jdbc:mysql://mydatabase.com/mydb";
     private static final String DB_USER = System.getEnv("SQL_USER");
     private static final String DB_PASSWORD = System.getEnv("SECRET");
+
+    private static final Logger logger = Logger.getLogger(VulnerableApp.class.getName());
 
     public static String getUserInput() {
         Scanner scanner = new Scanner(System.in);
@@ -24,7 +27,7 @@ public class VulnerableApp {
             String command = String.format("echo %s | mail -s \"%s\" %s", body, subject, to);
             Runtime.getRuntime().exec(command);
         } catch (Exception e) {
-            System.out.println("Error sending email: " + e.getMessage());
+            logger.log(Level.ERROR, "Email Error", e);
         }
     }
 
@@ -45,7 +48,7 @@ public class VulnerableApp {
 
             reader.close();
         } catch (Exception e) {
-            System.out.println("Error fetching data: " + e.getMessage());
+            logger.log(Level.ERROR, "Error fetching data", e);
         }
 
         return result.toString();
@@ -60,7 +63,7 @@ public class VulnerableApp {
             System.out.println("Data saved to database.");
 
         } catch (SQLException e) {
-            System.out.println("Database error: " + e.getMessage());
+            logger.log(Level.ERROR, "Database error", e);
         }
     }
 
@@ -72,4 +75,5 @@ public class VulnerableApp {
     }
 
 }
+
 
